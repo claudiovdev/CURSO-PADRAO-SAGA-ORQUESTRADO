@@ -98,6 +98,7 @@ services:
     depends_on:
       - kafka
       - order-db
+      - redpanda-console
     networks:
       - orchestrator-saga
     environment:
@@ -111,6 +112,7 @@ services:
     container_name: orchestrator-service
     depends_on:
       - kafka
+      - redpanda-console
     networks:
       - orchestrator-saga
     environment:
@@ -124,6 +126,7 @@ services:
     depends_on:
       - kafka
       - product-db
+      - redpanda-console
     networks:
       - orchestrator-saga
     environment:
@@ -142,6 +145,7 @@ services:
     depends_on:
       - kafka
       - payment-db
+      - redpanda-console
     networks:
       - orchestrator-saga
     environment:
@@ -160,6 +164,7 @@ services:
     depends_on:
       - kafka
       - inventory-db
+      - redpanda-console
     networks:
       - orchestrator-saga
     environment:
