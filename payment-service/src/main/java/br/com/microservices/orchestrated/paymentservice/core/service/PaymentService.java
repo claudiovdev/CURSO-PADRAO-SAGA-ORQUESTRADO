@@ -39,6 +39,7 @@ public class PaymentService {
             handleSuccess(event);
         }catch (Exception ex){
             log.error("Error trying to make validate payment: ", ex);
+            handleFailCurrentNotExecuted(event,ex.getMessage());
         }
         kafkaProducer.sendEvent(jsonUtil.toJson(event));
 
@@ -109,6 +110,31 @@ public class PaymentService {
         event.setSource(CURRENT_SOURCE);
         addHistory(event, "Payment realized with successfully!");
 
+    }
+
+    public void realizeRefound(Event event){
+        event.setStatus(ESagaStatus.FAIL);
+        event.setSource(CURRENT_SOURCE);
+        try{
+            changePaymentStatusToRefond(event);
+            addHistory(event, "Rollback executed for payment!");
+        }catch (Exception ex){
+            addHistory(event, "Rollback not executed for payment: ".concat(ex.getMessage()) );
+        }
+        changePaymentStatusToRefond(event);
+        kafkaProducer.sendEvent(jsonUtil.toJson(event));
+    }
+
+    private void changePaymentStatusToRefond(Event event){
+        var payment = findByOrderIdAndTransactionId(event);
+        payment.setStatus(EPaymentStatus.REFOUND);
+        setEventAmountItens(event, payment);
+        save(payment);
+    }
+    private void handleFailCurrentNotExecuted(Event event, String message){
+        event.setStatus(ESagaStatus.ROLLBACK_PENDING);
+        event.setSource(CURRENT_SOURCE);
+        addHistory(event, "Fail to realize  payment: ".concat(message));
     }
 
     private void setEventAmountItens(Event event, Payment payment){
