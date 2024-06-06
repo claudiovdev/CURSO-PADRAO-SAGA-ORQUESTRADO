@@ -1,6 +1,5 @@
 package br.com.microservices.orchestrated.orchestratorservice.config.kafka;
 
-import br.com.microservices.orchestrated.orchestratorservice.core.enums.ETopics;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -100,7 +99,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic productValidationFailTopic(){
-        return buildTopic(PRODUCT_VALIDATION_FAILT.getTopic());
+        return buildTopic(PRODUCT_VALIDATION_FAIL.getTopic());
     }
 
     @Bean
@@ -110,7 +109,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic paymentFailTopic(){
-        return buildTopic(PAYMENT_SUCCESS_FAILT.getTopic());
+        return buildTopic(PAYMENT_SUCCESS_FAIL.getTopic());
     }
 
     @Bean
@@ -120,7 +119,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic inventoryFailTopic(){
-        return buildTopic(INVENTORY_SUCCESS_FAILT.getTopic());
+        return buildTopic(INVENTORY_SUCCESS_FAIL.getTopic());
     }
 
     @Bean

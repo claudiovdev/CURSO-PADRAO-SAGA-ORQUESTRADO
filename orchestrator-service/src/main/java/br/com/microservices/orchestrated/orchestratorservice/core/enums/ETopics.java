@@ -12,11 +12,11 @@ public enum ETopics {
     FINISH_SUCCESS("finish-success"),
     FINISH_FAIL("finish-fail"),
     PRODUCT_VALIDATION_SUCCESS("product-validation-success"),
-    PRODUCT_VALIDATION_FAILT("product-validation-fail"),
+    PRODUCT_VALIDATION_FAIL("product-validation-fail"),
     PAYMENT_SUCCESS("payment-success"),
-    PAYMENT_SUCCESS_FAILT("payment-fail"),
+    PAYMENT_SUCCESS_FAIL("payment-fail"),
     INVENTORY_SUCCESS("inventory-success"),
-    INVENTORY_SUCCESS_FAILT("inventory-fail"),
+    INVENTORY_SUCCESS_FAIL("inventory-fail"),
     NOTIFY_ENDING("notify-ending");
 
     private String topic;
