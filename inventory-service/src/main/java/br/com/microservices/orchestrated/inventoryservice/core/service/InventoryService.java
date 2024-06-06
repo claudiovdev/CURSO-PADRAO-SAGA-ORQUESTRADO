@@ -38,11 +38,34 @@ public class InventoryService {
 
         }catch (Exception ex){
             log.error("Error trying to update inventory: ", ex);
+            handleFailCurrentNotExecuted(event, ex.getMessage());
         }
         kafkaProducer.sendEvent(jsonUtil.toJson(event));
     }
 
+    public void rollbackInventory(Event event){
+        event.setStatus(ESagaStatus.FAIL);
+        event.setSource(CURRENT_SOURCE);
+        try{
+            returnInventoryToPreviousValues(event);
+            addHistory(event, "Rollback executed for inventory!");
+        }catch (Exception ex){
+            addHistory(event, "Rollback not executed for inventory: ".concat(ex.getMessage()) );
+        }
+        kafkaProducer.sendEvent(jsonUtil.toJson(event));
+    }
 
+    private void returnInventoryToPreviousValues(Event event) {
+        orderInventoryRepository.findByOrderIdAndTransactionId(event.getPayload().getId(), event.getTransactionId())
+                .forEach(orderInventory -> {
+                    var inventory = orderInventory.get().getInventory();
+                    inventory.setAvailable(orderInventory.get().getOldQuantity());
+                    inventoryRepository.save(inventory);
+                    log.info("Restored inventory for order {} from {} to {}",
+                            event.getPayload().getId(), orderInventory.get().getOldQuantity(), inventory.getAvailable());
+                });
+
+    }
 
     private void checkCurrentValidation(Event event) {
         if (orderInventoryRepository.existsByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId())){
@@ -107,4 +130,10 @@ public class InventoryService {
                 .build();
         event.addToHistory(history);
     }
+    private void handleFailCurrentNotExecuted(Event event, String message){
+        event.setStatus(ESagaStatus.ROLLBACK_PENDING);
+        event.setSource(CURRENT_SOURCE);
+        addHistory(event, "Fail to update inventory: ".concat(message));
+    }
+
 }
