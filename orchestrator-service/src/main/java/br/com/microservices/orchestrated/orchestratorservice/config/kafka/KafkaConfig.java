@@ -25,13 +25,13 @@ public class KafkaConfig {
     public static final int REPLICA_COUNT = 1;
     public static final int PARTITION_COUNT = 1;
 
-    @Value("spring.kafka.bootstrap-servers")
+    @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("spring.kafka.consumer.group-id")
+    @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
 
-    @Value("spring.kafka.consumer.auto-offset-reset")
+    @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
 
     @Bean

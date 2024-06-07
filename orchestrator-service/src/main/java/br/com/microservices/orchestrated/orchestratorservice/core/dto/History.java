@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Data
 @Builder
@@ -19,4 +22,8 @@ public class History {
     private ESagaStatus status;
     private String message;
     private LocalDateTime createdAt;
+
+
+
+
 }
