@@ -14,9 +14,9 @@ public enum ETopics {
     PRODUCT_VALIDATION_SUCCESS("product-validation-success"),
     PRODUCT_VALIDATION_FAIL("product-validation-fail"),
     PAYMENT_SUCCESS("payment-success"),
-    PAYMENT_SUCCESS_FAIL("payment-fail"),
+    PAYMENT_FAIL("payment-fail"),
     INVENTORY_SUCCESS("inventory-success"),
-    INVENTORY_SUCCESS_FAIL("inventory-fail"),
+    INVENTORY_FAIL("inventory-fail"),
     NOTIFY_ENDING("notify-ending");
 
     private String topic;

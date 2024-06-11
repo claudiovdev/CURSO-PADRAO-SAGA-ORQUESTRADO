@@ -103,7 +103,6 @@ services:
       - orchestrator-saga
     environment:
       - KAFKA_BROKER=kafka:29092
-      - mongodb://root:root123@order-db:27017
     ports:
       - 3000:3000
 

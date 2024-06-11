@@ -109,7 +109,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic paymentFailTopic(){
-        return buildTopic(PAYMENT_SUCCESS_FAIL.getTopic());
+        return buildTopic(PAYMENT_FAIL.getTopic());
     }
 
     @Bean
@@ -119,7 +119,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic inventoryFailTopic(){
-        return buildTopic(INVENTORY_SUCCESS_FAIL.getTopic());
+        return buildTopic(INVENTORY_FAIL.getTopic());
     }
 
     @Bean
